@@ -75,7 +75,8 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            //add != null?
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -94,8 +95,28 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
-        // TODO - implement this method
-        return null;
+        ArrayList<HashMap<String, String>> matchingJobs = new ArrayList<>();
+
+        //loop through each job in allJobs
+        for (HashMap<String, String> job : allJobs) {
+            boolean jobAdded = false; //each job gets added only once
+
+            //loop through each field/column of the job
+            for (String field: job.keySet()) {
+                String fieldValue = job.get(field);
+
+                //check if the field contains the search term
+                if (fieldValue.toLowerCase().contains(value.toLowerCase())) {
+                    if (!jobAdded) {
+                        matchingJobs.add(job);
+                        jobAdded = true;
+                    }
+                }
+            }
+        }
+
+        return matchingJobs;
+
     }
 
     /**

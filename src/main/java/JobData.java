@@ -102,11 +102,10 @@ public class JobData {
             boolean jobAdded = false; //each job gets added only once
 
             //loop through each field/column of the job
-            for (String field: job.keySet()) {
-                String fieldValue = job.get(field);
+            for (Map.Entry<String, String> info: job.entrySet()) {
 
                 //check if the field contains the search term
-                if (fieldValue.toLowerCase().contains(value.toLowerCase())) {
+                if (info.getValue().toLowerCase().contains(value.toLowerCase())) {
                     if (!jobAdded) {
                         matchingJobs.add(job);
                         jobAdded = true;
